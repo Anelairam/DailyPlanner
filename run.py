@@ -43,8 +43,11 @@ def user_validation(userd, worksheet):
     Using user's input the fuction runs a for loop through the users worksheet and check if 
     the provided data are valid
     """
-    print(userd)
-    print(worksheet)
+    user_sheet = SHEET.worksheet(worksheet)
+    user_data = user_sheet.get_all_values()
+    for i in user_data:
+        print(user_data[i])
+    
 
 
 def user():
@@ -59,7 +62,7 @@ def user():
     user_data.append(username)
     user_data.append(passwrod)
     print(f"Hello {username} processing the data you provided... ")
-    user_validation(user_data,"user")
+    user_validation(user_data,"users")
 
 
 
@@ -78,7 +81,7 @@ def new_user():
 
 def main():
     us_choice = display()
-    if us_choice == 1 :
+    if us_choice == "1" :
         user()
     else:
         new_user()
