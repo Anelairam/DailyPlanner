@@ -38,6 +38,8 @@ def display():
             print(f"Invalid data: {e}, please try again.\n")
                 
 
+def user_validation(name,pass):
+    
 
 def user():
     """
@@ -48,6 +50,9 @@ def user():
 
     username = input("Please enter your username: ")
     passwrod = input("Please enter your password: ")
+    print(f"Hello {username} processing the data you provided... ")
+    user_validation(username,passwrod)
+
 
 
 
@@ -59,8 +64,16 @@ def new_user():
             the correct message and run the process again to get a right username
     """
 
+
+
+
+
 def main():
     us_choice = display()
+    if us_choice == 1 :
+        user()
+    else:
+        new_user()
 
 
 
