@@ -38,8 +38,14 @@ def display():
             print(f"Invalid data: {e}, please try again.\n")
                 
 
-def user_validation(name,pass):
-    
+def user_validation(userd, worksheet):
+    """
+    Using user's input the fuction runs a for loop through the users worksheet and check if 
+    the provided data are valid
+    """
+    print(userd)
+    print(worksheet)
+
 
 def user():
     """
@@ -47,11 +53,13 @@ def user():
         -Take user's name and password
         -Run user's information from the validator of the current entries
     """
-
+    user_data = []
     username = input("Please enter your username: ")
     passwrod = input("Please enter your password: ")
+    user_data.append(username)
+    user_data.append(passwrod)
     print(f"Hello {username} processing the data you provided... ")
-    user_validation(username,passwrod)
+    user_validation(user_data,"user")
 
 
 
