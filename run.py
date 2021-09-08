@@ -28,8 +28,19 @@ def display:
     today = date.today()
     print(today)    
     print("Welcome to the Daily Planner")
-    choice = input("If you are a new user please enter 0 if you already have an account enter 1: /n")
-    return choice
+    while True:
+        try:
+            choice = input("If you are a new user please enter 0 if you already are a user enter 1: /n")
+            if int(choice) != 1 or int(choice) != 0:
+                raise ValueError(
+                    f"Enter 0 for excisting user or 1 for new user, you entered {choice}"
+                )
+            else:
+                return choice
+        except ValueError as e:
+            print(f"Invalid data: {e}, please try again.\n")
+                
+
 
 def user:
     """
@@ -38,7 +49,9 @@ def user:
         -Run user's information from the validator of the current entries
     """
 
-    
+    username = input("Please enter your username: /n")
+    passwrod = input("Please enter your password: /n")
+
 
 
 def new_user:
@@ -51,3 +64,7 @@ def new_user:
 
 def main:
     us_choice = display()
+
+
+
+main()
