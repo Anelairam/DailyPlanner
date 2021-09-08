@@ -15,11 +15,8 @@ SHEET = GSPREAD_CLIENT.open("DaillyPannerDb")
 
 users = SHEET.worksheet("users")
 
-users_data = users.get_all_values()
 
-print(users_data)
-
-def display:
+def display():
     """
     Welcome message to the user:
         -ask information from the user if it is a new or an excisting one
@@ -30,10 +27,10 @@ def display:
     print("Welcome to the Daily Planner")
     while True:
         try:
-            choice = input("If you are a new user please enter 0 if you already are a user enter 1: /n")
-            if int(choice) != 1 or int(choice) != 0:
+            choice = input("If you are a new user please enter 0 if you already are a user enter 1: ")
+            if choice != "1" and choice != "0":
                 raise ValueError(
-                    f"Enter 0 for excisting user or 1 for new user, you entered {choice}"
+                    f"Enter 0 for excisting user or 1 for new user, you entered: {choice}"
                 )
             else:
                 return choice
@@ -42,19 +39,19 @@ def display:
                 
 
 
-def user:
+def user():
     """
     Asking for user's data
         -Take user's name and password
         -Run user's information from the validator of the current entries
     """
 
-    username = input("Please enter your username: /n")
-    passwrod = input("Please enter your password: /n")
+    username = input("Please enter your username: ")
+    passwrod = input("Please enter your password: ")
 
 
 
-def new_user:
+def new_user():
     """
     Asking for new user's data
         -Ask for username and password
@@ -62,7 +59,7 @@ def new_user:
             the correct message and run the process again to get a right username
     """
 
-def main:
+def main():
     us_choice = display()
 
 
