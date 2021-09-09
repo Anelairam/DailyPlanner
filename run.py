@@ -130,16 +130,16 @@ def main_menu(val_user):
                     f"You can choose between options 1-4, option {menu_choice} is not valid"
                 )
             elif choice == 1:
-                print("Your choice is 1")
+                print("You chose to see your events for the day...")
                 events_of_the_day(val_user, today)
             elif choice == 2:
-                print("Your choice is 2")
+                print("You chose to add a new event...")
                 new_event(val_user)
             elif choice == 3:
-                print("Your choice is 3")
+                print("You chose to delete an event...")
                 delete_event(val_user)
             else:
-                print("Your choice is 4")
+                print("Same that you want to go, see you soon. Bye!")
                 exit()
         except ValueError as e:
             print(f"Invalid data: {e}, please try again.\n")
