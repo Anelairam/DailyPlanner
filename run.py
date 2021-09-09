@@ -27,7 +27,7 @@ def display():
     print("Welcome to the Daily Planner")
     while True:
         try:
-            choice = input("If you are a new user please enter 0 if you already are a user enter 1: ")
+            choice = input("If you are a new user please enter 0 if you already are a user enter 1:\n")
             if choice != "1" and choice != "0":
                 raise ValueError(
                     f"Enter 0 for excisting user or 1 for new user, you entered: {choice}"
@@ -61,8 +61,8 @@ def user():
         -Run user's information from the validator of the current entries
     """
     user_data = []
-    username = input("Please enter your username: ")
-    passwrod = input("Please enter your password: ")
+    username = input(f"Please enter your username:\n")
+    passwrod = input(f"Please enter your password:\n")
     user_data.append(username)
     user_data.append(passwrod)
     print(f"Hello {username} processing the data you provided... ")
@@ -82,25 +82,25 @@ def user():
 
 def new_event(user):
     """
-    Askthe user to insert the new event's information in a specific way
+    Ask the user to insert the new event's information in a specific way
+    Add all the user's information into the db
     """
     events_sheet = SHEET.worksheet("events")
     event_data = []
     try:
         print(f"Your new event will have the following format: 'Date' , 'Time' , 'Desciption' , 'With Who', 'Where' \n")
-        date = input("When is your new event? ")
-        time = input("What time is your event? ")
-        description = input("What is the subject of the event? ")
-        who = input("Who are you going to meet? ")
-        location = input(f"Where are you going to meet with {who} ?")
+        date = input(f"When is your new event?\n")
+        time = input(f"What time is your event?\n")
+        description = input(f"What is the subject of the event?\n")
+        who = input(f"Who are you going to meet? ")
+        location = input(f"Where are you going to meet with {who} ?\n")
         event_data.append(user)
         event_data.append(date)
         event_data.append(time)
         event_data.append(description)
         event_data.append(who)
         event_data.append(location)
-        events_sheet.append_row(event_data)
-           
+        events_sheet.append_row(event_data)           
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
 
@@ -123,7 +123,7 @@ def main_menu(val_user):
     while True:
         try:
             print(f" 1.Display my events for today\n", f"2.Add a new event\n", f"3.Delete an event\n", f"4.Exit\n")
-            menu_choice = input("Please choose from the options 1-4 : ")
+            menu_choice = input(f"Please choose from the options 1-4 :\n")
             choice = int(menu_choice)
             if choice < 1 or choice > 4:
                 raise ValueError(
