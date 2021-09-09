@@ -81,16 +81,19 @@ def events_of_the_day(user, today):
     """
     Loop through the database and display only the data that are corresponding to today's date
     """
-    for data in events_sheet:
+    events_sheet = SHEET.worksheet("events")
+    events_data = events_sheet.get_all_values()
+    id_column = events_sheet.col_values(1)
+    time_column = events_sheet.col_values(3)
+    for data in events_data:
         if data[0] == user:
-            print(data)
+            print(f"{user} you have scheduled an event today at {} with {} on {}")
 
 def new_event(user):
     """
     Ask the user to insert the new event's information in a specific way
     Add all the user's information into the db
     """
-    global events_sheet
     events_sheet = SHEET.worksheet("events")
     event_data = []
     try:
