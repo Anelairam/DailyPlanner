@@ -46,7 +46,10 @@ def user_validation(userd, worksheet):
     user_sheet = SHEET.worksheet(worksheet)
     user_data = user_sheet.get_all_values()
     for i in user_data:
-        print(user_data[i])
+        if i == userd:
+            print(i)
+        else:
+            print("The username or the password you provided might be wrong")
     
 
 
@@ -62,7 +65,7 @@ def user():
     user_data.append(username)
     user_data.append(passwrod)
     print(f"Hello {username} processing the data you provided... ")
-    user_validation(user_data,"users")
+    user_validation(user_data, "users")
 
 
 
@@ -70,9 +73,9 @@ def user():
 def new_user():
     """
     Asking for new user's data
-        -Ask for username and password
-        -Run user's information from the validator if the username excists or not provide 
-            the correct message and run the process again to get a right username
+        -Ask the user to add his username and password
+        -Run user's information from the validator if the username already excists inform
+            the user that the username exists and provide a new one
     """
 
 
@@ -85,7 +88,7 @@ def main():
         user()
     else:
         new_user()
-
+    main_menu()
 
 
 main()
