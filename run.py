@@ -22,7 +22,7 @@ def display():
         -ask information from the user if it is a new or an excisting one
     """
 
-    today = date.today()
+    global today = date.today()
     print(today)    
     print("Welcome to the Daily Planner")
     while True:
@@ -48,6 +48,7 @@ def user_validation(userd, worksheet):
     for i in user_data:
         if i == userd:
             print(i)
+            return userd[0]
         else:
             print("The username or the password you provided might be wrong")
     
@@ -65,30 +66,54 @@ def user():
     user_data.append(username)
     user_data.append(passwrod)
     print(f"Hello {username} processing the data you provided... ")
-    user_validation(user_data, "users")
-
-
+    val_username = user_validation(user_data, "users")
+    return val_username
 
 
 def new_user():
     """
     Asking for new user's data
         -Ask the user to add his username and password
-        -Run user's information from the validator if the username already excists inform
+        -Run user's information from the validator if the username already exists inform
             the user that the username exists and provide a new one
     """
 
+def main_menu(val_user):
+    """
+    The funtion provides to the user his four navigating options:
+        -1.Display the days events
+        -2.Add a new event
+        -3.Delete an event
+        -4.Exit or log out
+    """
+    print(f"Hello {val_user} how can I help you today? \n")
+    
 
-
+    while True:
+        try:
+            print(f" 1.Display my events for today\n", f"2.Add a new event\n", f"3.Delete an event\n", f"4.Exit\n")
+            menu_choice = input("Please choose from the options 1-4 : ")
+            int(menu_choice)
+            if menu_choice < 1 or menu_choice > 4:
+                raise ValueError(
+                    f"You can choose between options 1-4, option {menu_choice} is not valid"
+                )
+            elif menu_choice == 1:
+                events_of_the_day(val_user, today)
+            elif menu_choice == 2:
+            elif menu_choice == 3:
+            else:
+        except ValueError as e:
+            print(f"Invalid data: {e}, please try again.\n")
 
 
 def main():
     us_choice = display()
-    if us_choice == "1" :
-        user()
+    if us_choice == "1":
+        valid_user = user()
     else:
         new_user()
-    main_menu()
+    main_menu(valid_user)
 
 
 main()
