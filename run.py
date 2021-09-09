@@ -77,14 +77,20 @@ def user():
         -Run user's information from the validator if the username already exists inform
             the user that the username exists and provide a new one
     """
-#def events_of_the_day(user, date):
-
+def events_of_the_day(user, today):
+    """
+    Loop through the database and display only the data that are corresponding to today's date
+    """
+    for data in events_sheet:
+        if data[0] == user:
+            print(data)
 
 def new_event(user):
     """
     Ask the user to insert the new event's information in a specific way
     Add all the user's information into the db
     """
+    global events_sheet
     events_sheet = SHEET.worksheet("events")
     event_data = []
     try:
