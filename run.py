@@ -1,6 +1,5 @@
 import gspread
 from google.oauth2.service_account import Credentials
-#from datetime import date
 import datetime
 
 SCOPE = [
@@ -81,8 +80,25 @@ def user():
 #def events_of_the_day(user, date):
 
 
-#def new_event(user):
-
+def new_event(user):
+    """
+    Askthe user to insert the new event's information in a specific way
+    """
+    try:
+        print(f"Your new event will have the following format: 'Date' , 'Time' , 'Desciption' , 'Where', 'With Who' \n")
+        date = input("When is your new event? ")
+        time = input("What time is your event? ")
+        description = input("What is the subject of the event? ")
+        who = input("Who are you going to meet? ")
+        location = input(f"Where are you going to meet with {who} ?")
+            if choice != "1" and choice != "0":
+                raise ValueError(
+                    f"Enter 0 for excisting user or 1 for new user, you entered: {choice}"
+                )
+            else:
+                return choice
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
 
 #def delete_event(user):
 
@@ -104,18 +120,18 @@ def main_menu(val_user):
         try:
             print(f" 1.Display my events for today\n", f"2.Add a new event\n", f"3.Delete an event\n", f"4.Exit\n")
             menu_choice = input("Please choose from the options 1-4 : ")
-            int(menu_choice)
-            if menu_choice < 1 or menu_choice > 4:
+            choice = int(menu_choice)
+            if choice < 1 or choice > 4:
                 raise ValueError(
                     f"You can choose between options 1-4, option {menu_choice} is not valid"
                 )
-            elif menu_choice == 1:
+            elif choice == 1:
                 print("Your choice is 1")
                 events_of_the_day(val_user, today)
-            elif menu_choice == 2:
+            elif choice == 2:
                 print("Your choice is 2")
                 new_event(val_user)
-            elif menu_choice == 3:
+            elif choice == 3:
                 print("Your choice is 3")
                 delete_event(val_user)
             else:
@@ -129,6 +145,7 @@ def main():
     us_choice = display()
     if us_choice == "1":
         valid_user = user()
+        print(valid_user)
     else:
         new_user()
     main_menu(valid_user)
