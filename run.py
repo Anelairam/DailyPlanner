@@ -87,7 +87,8 @@ def events_of_the_day(user, today):
     time_column = events_sheet.col_values(3)
     for data in events_data:
         if data[0] == user:
-            print(f"{user} you have scheduled an event today at {} with {} on {}")
+                print(f"{user}")
+            #print(f"{user} you have scheduled an event today at {} with {} on {}")
 
 def new_event(user):
     """
