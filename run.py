@@ -1,6 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
-from datetime import date
+#from datetime import date
+import datetime
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -21,9 +22,9 @@ def display():
     Welcome message to the user:
         -ask information from the user if it is a new or an excisting one
     """
-
-    global today = date.today()
-    print(today)    
+    global today
+    today = datetime.datetime.now()    
+    print(today.strftime("%x"))
     print("Welcome to the Daily Planner")
     while True:
         try:
@@ -70,13 +71,25 @@ def user():
     return val_username
 
 
-def new_user():
+#def new_user():
     """
     Asking for new user's data
         -Ask the user to add his username and password
         -Run user's information from the validator if the username already exists inform
             the user that the username exists and provide a new one
     """
+#def events_of_the_day(user, date):
+
+
+#def new_event(user):
+
+
+#def delete_event(user):
+
+
+#def exit():
+
+
 
 def main_menu(val_user):
     """
@@ -87,8 +100,6 @@ def main_menu(val_user):
         -4.Exit or log out
     """
     print(f"Hello {val_user} how can I help you today? \n")
-    
-
     while True:
         try:
             print(f" 1.Display my events for today\n", f"2.Add a new event\n", f"3.Delete an event\n", f"4.Exit\n")
@@ -99,10 +110,17 @@ def main_menu(val_user):
                     f"You can choose between options 1-4, option {menu_choice} is not valid"
                 )
             elif menu_choice == 1:
+                print("Your choice is 1")
                 events_of_the_day(val_user, today)
             elif menu_choice == 2:
+                print("Your choice is 2")
+                new_event(val_user)
             elif menu_choice == 3:
+                print("Your choice is 3")
+                delete_event(val_user)
             else:
+                print("Your choice is 4")
+                exit()
         except ValueError as e:
             print(f"Invalid data: {e}, please try again.\n")
 
