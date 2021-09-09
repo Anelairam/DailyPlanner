@@ -84,19 +84,23 @@ def new_event(user):
     """
     Askthe user to insert the new event's information in a specific way
     """
+    events_sheet = SHEET.worksheet("events")
+    event_data = []
     try:
-        print(f"Your new event will have the following format: 'Date' , 'Time' , 'Desciption' , 'Where', 'With Who' \n")
+        print(f"Your new event will have the following format: 'Date' , 'Time' , 'Desciption' , 'With Who', 'Where' \n")
         date = input("When is your new event? ")
         time = input("What time is your event? ")
         description = input("What is the subject of the event? ")
         who = input("Who are you going to meet? ")
         location = input(f"Where are you going to meet with {who} ?")
-            if choice != "1" and choice != "0":
-                raise ValueError(
-                    f"Enter 0 for excisting user or 1 for new user, you entered: {choice}"
-                )
-            else:
-                return choice
+        event_data.append(user)
+        event_data.append(date)
+        event_data.append(time)
+        event_data.append(description)
+        event_data.append(who)
+        event_data.append(location)
+        events_sheet.append_row(event_data)
+           
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
 
