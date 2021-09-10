@@ -80,6 +80,7 @@ def new_user():
     id_sheet = SHEET.worksheet("users")
     accounts = id_sheet.col_values(1)
     new_entry = []
+    found = 0
     while True:
         try:
             n_user = input("Please choose your username : \n")
@@ -92,15 +93,16 @@ def new_user():
                     break
             for account in accounts:
                 if n_user == account:
-                    new_entry.append(n_user)
-                    new_entry.append(n_password)
-                    id_sheet.append_row(new_entry)
-                else:
-                    raise ValueError(
-                        f"The username that you have entered already exists"
-                    )
-        except ValueError as e:
-            print(f"Invalid data: {e}, please try again.\n")
+                    found = 1
+            if found != 1:
+                new_entry.append(n_user)
+                new_entry.append(n_password)
+                id_sheet.append_row(new_entry)
+                return n_user
+            else:
+                print("The username that you have entered already exists")
+        except:
+            print(f"You have entered: '{n_user}'. This username already exists please try again...")
 
 
 #def events_of_the_day(user, today):
@@ -187,7 +189,7 @@ def main():
         valid_user = user()
         print(valid_user)
     else:
-        new_user()
+        valid_user = new_user()
     main_menu(valid_user)
 
 
