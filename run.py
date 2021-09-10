@@ -87,20 +87,22 @@ def new_user():
             while True:
                 n_password = input("Please enter your password: \n")
                 v_password = input("Re enter your password for validation: \n")
+                print("Hello we are now processing your data.")
                 if n_password != v_password:
-                    print( "The password you provided do not match the original, please try again...")
+                    print(f"Unfortunatelly {n_user} the password you provided do not match the original, please try again...")
                 else:
                     break
             for account in accounts:
                 if n_user == account:
                     found = 1
             if found != 1:
+                print(f"Welcome to Daily Planner {n_user}, we will direct you to the main menu.")
                 new_entry.append(n_user)
                 new_entry.append(n_password)
                 id_sheet.append_row(new_entry)
                 return n_user
             else:
-                print("The username that you have entered already exists")
+                raise ValueError() 
         except:
             print(f"You have entered: '{n_user}'. This username already exists please try again...")
 
