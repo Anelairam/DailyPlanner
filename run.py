@@ -70,24 +70,50 @@ def user():
     return val_username
 
 
-#def new_user():
+def new_user():
     """
     Asking for new user's data
         -Ask the user to add his username and password
         -Run user's information from the validator if the username already exists inform
             the user that the username exists and provide a new one
     """
-def events_of_the_day(user, today):
+    id_sheet = SHEET.worksheet("users")
+    accounts = id_sheet.col_values(1)
+    new_entry = []
+    while True:
+        try:
+            n_user = input("Please choose your username : \n")
+            while True:
+                n_password = input("Please enter your password: \n")
+                v_password = input("Re enter your password for validation: \n")
+                if n_password != v_password:
+                    print( "The password you provided do not match the original, please try again...")
+                else:
+                    break
+            for account in accounts:
+                if n_user == account:
+                    new_entry.append(n_user)
+                    new_entry.append(n_password)
+                    id_sheet.append_row(new_entry)
+                else:
+                    raise ValueError(
+                        f"The username that you have entered already exists"
+                    )
+        except ValueError as e:
+            print(f"Invalid data: {e}, please try again.\n")
+
+
+#def events_of_the_day(user, today):
     """
     Loop through the database and display only the data that are corresponding to today's date
     """
-    events_sheet = SHEET.worksheet("events")
-    events_data = events_sheet.get_all_values()
-    id_column = events_sheet.col_values(1)
-    time_column = events_sheet.col_values(3)
-    for data in events_data:
-        if data[0] == user:
-                print(f"{user}")
+ #   events_sheet = SHEET.worksheet("events")
+  #  events_data = events_sheet.get_all_values()
+   # id_column = events_sheet.col_values(1)
+    #time_column = events_sheet.col_values(3)
+    #for data in events_data:
+     #   if data[0] == user:
+      #          print(f"{user}")
             #print(f"{user} you have scheduled an event today at {} with {} on {}")
 
 def new_event(user):
