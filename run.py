@@ -107,18 +107,30 @@ def new_user():
             print(f"You have entered: '{n_user}'. This username already exists please try again...")
 
 
-#def events_of_the_day(user, today):
+def events_of_the_day(user):
     """
     Loop through the database and display only the data that are corresponding to today's date
     """
- #   events_sheet = SHEET.worksheet("events")
-  #  events_data = events_sheet.get_all_values()
-   # id_column = events_sheet.col_values(1)
-    #time_column = events_sheet.col_values(3)
-    #for data in events_data:
-     #   if data[0] == user:
-      #          print(f"{user}")
-            #print(f"{user} you have scheduled an event today at {} with {} on {}")
+    events_sheet = SHEET.worksheet("events")
+    ids = events_sheet.col_values(1)
+    days = events_sheet.col_values(2)
+    hours = events_sheet.col_values(3)
+    subjects = events_sheet.col_values(4)
+    persons = events_sheet.col_values(5)
+    locations = events_sheet.col_values(6)
+    event_holder = []
+
+    for id,day,hour,subject,person,location in zip(ids,days,hours,subjects,persons,locations):
+        if id == user and today == days:
+            event_holder.append(id)
+            event_holder.append(day)
+            event_holder.append(hour)
+            event_holder.append(subject)
+            event_holder.append(person)
+            event_holder.append(location)    
+
+    print(event_holder)
+
 
 def new_event(user):
     """
@@ -171,7 +183,7 @@ def main_menu(val_user):
                 )
             elif choice == 1:
                 print("You chose to see your events for the day...")
-                events_of_the_day(val_user, today)
+                events_of_the_day(val_user)
             elif choice == 2:
                 print("You chose to add a new event...")
                 new_event(val_user)
