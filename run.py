@@ -112,24 +112,33 @@ def events_of_the_day(user):
     Loop through the database and display only the data that are corresponding to today's date
     """
     events_sheet = SHEET.worksheet("events")
-    ids = events_sheet.col_values(1)
-    days = events_sheet.col_values(2)
-    hours = events_sheet.col_values(3)
-    subjects = events_sheet.col_values(4)
-    persons = events_sheet.col_values(5)
-    locations = events_sheet.col_values(6)
-    event_holder = []
-
-    for id,day,hour,subject,person,location in zip(ids,days,hours,subjects,persons,locations):
-        if id == user and today == days:
-            event_holder.append(id)
-            event_holder.append(day)
-            event_holder.append(hour)
-            event_holder.append(subject)
-            event_holder.append(person)
-            event_holder.append(location)    
-
+    users_events = SHEET.worksheet("user's events")
+    num = events_sheet.col_values(1)
+    ids = events_sheet.col_values(2)
+    days = events_sheet.col_values(3)
+    hours = events_sheet.col_values(4)
+    subjects = events_sheet.col_values(5)
+    persons = events_sheet.col_values(6)
+    locations = events_sheet.col_values(7)    
+    if action == 1: #Display uer's event of the day
+        event_holder = []
+            for id,day,hour,subject,person,location in zip(ids,days,hours,subjects,persons,locations):
+                if id == user :
+                    event_holder.append(id)
+                    event_holder.append(day)
+                    event_holder.append(hour)
+                    event_holder.append(subject)
+                    event_holder.append(person)
+                    event_holder.append(location)    
+                    print(event_holder)
+                    print("\n")
     print(event_holder)
+
+
+def get_data(action,user):
+    """
+    The function receives two variables, username and the action.
+    """
 
 
 def new_event(user):
