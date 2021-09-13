@@ -45,12 +45,15 @@ def user_validation(userd, worksheet):
     """
     user_sheet = SHEET.worksheet(worksheet)
     user_data = user_sheet.get_all_values()
+    find = 0
     for i in user_data:
         if i == userd:
             print(i)
             return userd[0]
-        else:
-            print("The username or the password you provided might be wrong")
+            find = 1
+    if find = 0:
+        print("The username or the password you provided might be wrong")
+            
     
 
 
@@ -152,10 +155,7 @@ def get_data(action,user):
                 event_holder.append(location)
                 users_events.append_row(event_holder)
                 print(f"#{num}. Meeting today at {hour} with {person} at {location} for {subject} \n")
-        if action == 3:
-            try:
-                del_event = input(f"{user} choose which event you want to delete providing it's number: \n")
-                if del_event >= 1 or del_event <= len(users_events)
+        
 
     
 def exit():
