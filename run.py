@@ -123,7 +123,7 @@ def get_data(action,user):
     subjects = events_sheet.col_values(5)
     persons = events_sheet.col_values(6)
     locations = events_sheet.col_values(7)    
-    if action == 1: #Display user's event of the day
+    if action == 1:#Display user's event of the day
         event_holder = []
         count = 0
         print(f"{user} here is your day's agenda:\n")
@@ -182,11 +182,11 @@ def new_event(user):
     events_sheet = SHEET.worksheet("events")
     event_data = []
     try:
-        print(f"Your new event will have the following format: 'Date' , 'Time' , 'Desciption' , 'With Who', 'Where' \n")
+        print("Your new event will have the following format: 'Date' , 'Time' , 'Desciption' , 'With Who', 'Where' \n")
         date = input(f"When is your new event?\n")
         time = input(f"What time is your event?\n")
-        description = input(f"What is the subject of the event?\n")
-        who = input(f"Who are you going to meet? ")
+        description = input("What is the subject of the event?\n")
+        who = input("Who are you going to meet? ")
         location = input(f"Where are you going to meet with {who} ?\n")
         event_data.append(user)
         event_data.append(date)
@@ -216,7 +216,7 @@ def main_menu(val_user):
     print(f"Hello {val_user} how can I help you today? \n")
     while True:
         try:
-            print(f" 1.Display my events for today\n", f"2.Add a new event\n", f"3.Delete an event\n", f"4.Exit\n")
+            print(f"1.Display my events for today\n", f"2.Add a new event\n", f"3.Delete an event\n", f"4.Exit\n")
             menu_choice = input(f"Please choose from the options 1-4 :\n")
             choice = int(menu_choice)
             if choice < 1 or choice > 4:
@@ -225,13 +225,13 @@ def main_menu(val_user):
                 )
             elif choice == 1:
                 print("You chose to see your events for the day...")
-                get_data(choice,val_user)
+                get_data(choice, val_user)
             elif choice == 2:
                 print("You chose to add a new event...")
                 new_event(val_user)
             elif choice == 3:
                 print("You chose to delete an event...")
-                get_data(choice,val_user)
+                get_data(choice, val_user)
             else:
                 print("Same that you want to go, see you soon. Bye!")
                 exit()
