@@ -51,7 +51,7 @@ def user_validation(userd, worksheet):
             print(i)
             return userd[0]
             find = 1
-    if find = 0:
+    if find == 0:
         print("The username or the password you provided might be wrong")
             
     
