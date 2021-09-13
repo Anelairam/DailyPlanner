@@ -107,39 +107,72 @@ def new_user():
             print(f"You have entered: '{n_user}'. This username already exists please try again...")
 
 
-def events_of_the_day(user):
+def get_data(action,user):
     """
     Loop through the database and display only the data that are corresponding to today's date
     """
     events_sheet = SHEET.worksheet("events")
     users_events = SHEET.worksheet("user's events")
-    num = events_sheet.col_values(1)
+    nums = events_sheet.col_values(1)
     ids = events_sheet.col_values(2)
     days = events_sheet.col_values(3)
     hours = events_sheet.col_values(4)
     subjects = events_sheet.col_values(5)
     persons = events_sheet.col_values(6)
     locations = events_sheet.col_values(7)    
-    if action == 1: #Display uer's event of the day
+    if action == 1: #Display user's event of the day
         event_holder = []
-            for id,day,hour,subject,person,location in zip(ids,days,hours,subjects,persons,locations):
-                if id == user :
-                    event_holder.append(id)
-                    event_holder.append(day)
-                    event_holder.append(hour)
-                    event_holder.append(subject)
-                    event_holder.append(person)
-                    event_holder.append(location)    
-                    print(event_holder)
-                    print("\n")
-    print(event_holder)
+        count = 0
+        print(f"{user} here is your day's agenda:\n")
+        for num,id,day,hour,subject,person,location in zip(nums,ids,days,hours,subjects,persons,locations):
+            if id == user and today == day:
+                count =+ 1
+                event_holder.append(count)
+                event_holder.append(id)
+                event_holder.append(day)
+                event_holder.append(hour)
+                event_holder.append(subject)
+                event_holder.append(person)
+                event_holder.append(location)
+                users_events.append_row(event_holder)
+                print(f"#{num}. Meeting today at {hour} with {person} at {location} for {subject} \n")
+    elif action == 2 or action == 3: #Display all of the user's events and give the option to delete events
+        event_holder = []
+        count = 0
+        print(f"{user} you have scheduled the following events:\n")
+        for num,id,day,hour,subject,person,location in zip(nums,ids,days,hours,subjects,persons,locations):
+            if id == user:
+                count =+ 1
+                event_holder.append(count)
+                event_holder.append(id)
+                event_holder.append(day)
+                event_holder.append(hour)
+                event_holder.append(subject)
+                event_holder.append(person)
+                event_holder.append(location)
+                users_events.append_row(event_holder)
+                print(f"#{num}. Meeting today at {hour} with {person} at {location} for {subject} \n")
+        if action == 3:
+            try:
+                del_event = input(f"{user} choose which event you want to delete providing it's number: \n")
+                if del_event >= 1 or del_event <= len(users_events)
 
+    
+def exit():
+    choice = input(f"{user} you are about to exit your calendar, if you are sure enter yes, if not enter no: \n")
+    try:
+        if choice == "yes":
+            main()
+        elif choice == "no":
+            main_menu()
+        else:
+            raise ValueError(
+                f"You can only choose yes or no"
+            )
+    except ValueError as e:
+            print(f"Invalid input: {e}, please try again.\n")
 
-def get_data(action,user):
-    """
-    The function receives two variables, username and the action.
-    """
-
+        
 
 def new_event(user):
     """
@@ -192,13 +225,13 @@ def main_menu(val_user):
                 )
             elif choice == 1:
                 print("You chose to see your events for the day...")
-                events_of_the_day(val_user)
+                get_data(choice,val_user)
             elif choice == 2:
                 print("You chose to add a new event...")
                 new_event(val_user)
             elif choice == 3:
                 print("You chose to delete an event...")
-                delete_event(val_user)
+                get_data(choice,val_user)
             else:
                 print("Same that you want to go, see you soon. Bye!")
                 exit()
