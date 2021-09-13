@@ -243,7 +243,6 @@ def main():
     us_choice = display()
     if us_choice == "1":
         valid_user = user()
-        print(valid_user)
     else:
         valid_user = new_user()
     main_menu(valid_user)
