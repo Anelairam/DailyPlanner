@@ -109,6 +109,7 @@ def new_user():
             print(f"Welcome to Daily Planner {n_user}, we will direct you to the main menu.")
             new_entry.append(n_user)
             new_entry.append(n_password)
+            new_entry.append(f_name)
             id_sheet.append_row(new_entry)
             return n_user
             #else:
