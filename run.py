@@ -74,11 +74,14 @@ def user():
             user_data.append(username)
             user_data.append(passwrod)
             print(f"Hello {username} processing the data you provided... ")
+            print(user_data)
             val_username = user_validation(user_data, "users")
             if val_username != 0:
                 validation = False
                 return user_data
             else:
+                user_data.pop(0)
+                user_data.pop(0)
                 raise ValueError(
                     f"The username or the password you have entered is wrong, please try again.")
         except ValueError as e:
