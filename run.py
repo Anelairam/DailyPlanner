@@ -134,7 +134,7 @@ def get_data(action, user):
     if action == 1:
         #Display user's events
         print(f"{user} here are your events:\n")
-        for id, user_id, day, hour, subject, person, location in zip(ids ,user_ids, days, hours, subjects, persons, locations):
+        for id, user_id, day, hour, subject, person, location in zip(ids, user_ids, days, hours, subjects, persons, locations):
             if user_id == user:
                 print(f"#{id}. {day} Meeting at {hour} with {person} at {location} for {subject} \n")
     else:
@@ -143,6 +143,12 @@ def get_data(action, user):
         for id, user_id, day, hour, subject, person, location in zip(ids, user_ids, days, hours, subjects, persons, locations):
             if user_id == user:
                 print(f"#{id}. {day} Meeting at {hour} with {person} at {location} for {subject} \n")
+        while True:
+            try:
+                del_event = input("Choose which event you want to delete by entering it's id without the #: ")
+                if int(del_event) < len(ids):
+
+            
 
 
 def new_event(user):
