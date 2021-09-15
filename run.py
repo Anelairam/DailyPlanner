@@ -1,6 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 from datetime import date
+import datetime
 
 
 SCOPE = [
@@ -22,10 +23,10 @@ def display():
     Welcome message to the user:
         -ask information from the user if it is a new or an excisting one
     """
-    global today  
-    today = date.today() 
-    print(today)
-    print(today.strftime("%d"),today.strftime("%B"),today.strftime("%Y"))
+    global currentday  
+    currentday = date.today() 
+    print(currentday)
+    print(currentday.strftime("%d"),currentday.strftime("%B"),currentday.strftime("%Y"))
     print("Welcome to the Daily Planner")
     while True:
         try:
@@ -38,7 +39,7 @@ def display():
                 return choice
         except ValueError as e:
             print(f"Invalid data: {e}, please try again.\n")
-                
+               
 
 def user_validation(userd, worksheet):
     """
@@ -49,8 +50,8 @@ def user_validation(userd, worksheet):
     user_email = user_sheet.col_values(1)
     user_pass = user_sheet.col_values(2)
     find = 0
-    for i in zip(user_email,user_pass):
-        if i == userd:
+    for i in zip(user_email, user_pass):
+        if i == tuple(userd):
             find = 1
             return find
     if find == 0:
@@ -92,7 +93,6 @@ def new_user():
             the user that the username exists and provide a new one
     """
     id_sheet = SHEET.worksheet("users")
-    accounts = id_sheet.col_values(1)
     new_entry = []
     while True:
         try:
@@ -103,65 +103,43 @@ def new_user():
                 v_password = input("Re enter your password for validation: \n")
                 print("Hello we are now processing your data.")
                 if n_password != v_password:
-                    print(f"Unfortunatelly {n_user} the password you provided do not match the original, please try again...")
+                    print(f"Unfortunatelly {f_name} the password you provided do not match the original, please try again...")
                 else:
                     break
-            print(f"Welcome to Daily Planner {n_user}, we will direct you to the main menu.")
+            print(f"Welcome to Daily Planner {f_name}, we will direct you to the main menu.")
             new_entry.append(n_user)
             new_entry.append(n_password)
             new_entry.append(f_name)
             id_sheet.append_row(new_entry)
             return n_user
-            #else:
-            #    raise ValueError() 
         except:
-            print(f"You have entered: '{n_user}'. This is not a valid email, please try again...")
+            print(f"You have entered: '{f_name}'. This is not a valid email, please try again...")
 
-def get_data(action,user):
+
+def get_data(action, user):
     """
     Loop through the database and display only the data that are corresponding to today's date
     """
     events_sheet = SHEET.worksheet("events")
-    users_events = SHEET.worksheet("user's events")
-    nums = events_sheet.col_values(1)
-    ids = events_sheet.col_values(2)
+    ids = events_sheet.col_values(1)
+    user_ids = events_sheet.col_values(2)
     days = events_sheet.col_values(3)
     hours = events_sheet.col_values(4)
     subjects = events_sheet.col_values(5)
     persons = events_sheet.col_values(6)
     locations = events_sheet.col_values(7)    
-    if action == 1: #Display user's event of the day
-        event_holder = []
-        count = 0
-        print(f"{user} here is your day's agenda:\n")
-        for num,id,day,hour,subject,person,location in zip(nums,ids,days,hours,subjects,persons,locations):
-            if id == user and today == day:
-                count =+ 1
-                event_holder.append(count)
-                event_holder.append(id)
-                event_holder.append(day)
-                event_holder.append(hour)
-                event_holder.append(subject)
-                event_holder.append(person)
-                event_holder.append(location)
-                users_events.append_row(event_holder)
-                print(f"#{num}. Meeting today at {hour} with {person} at {location} for {subject} \n")
-    elif action == 2 or action == 3: #Display all of the user's events and give the option to delete events
-        event_holder = []
-        count = 0
+    if action == 1:
+        #Display user's events
+        print(f"{user} here are your events:\n")
+        for id, user_id, day, hour, subject, person, location in zip(ids ,user_ids, days, hours, subjects, persons, locations):
+            if user_id == user:
+                print(f"#{id}. {day} Meeting at {hour} with {person} at {location} for {subject} \n")
+    else:
+        #Display all of the user's events and give the option to delete events
         print(f"{user} you have scheduled the following events:\n")
-        for num,id,day,hour,subject,person,location in zip(nums,ids,days,hours,subjects,persons,locations):
-            if id == user:
-                count =+ 1
-                event_holder.append(count)
-                event_holder.append(id)
-                event_holder.append(day)
-                event_holder.append(hour)
-                event_holder.append(subject)
-                event_holder.append(person)
-                event_holder.append(location)
-                users_events.append_row(event_holder)
-                print(f"#{num}. Meeting today at {hour} with {person} at {location} for {subject} \n")
+        for id, user_id, day, hour, subject, person, location in zip(ids, user_ids, days, hours, subjects, persons, locations):
+            if user_id == user:
+                print(f"#{id}. {day} Meeting at {hour} with {person} at {location} for {subject} \n")
 
 
 def new_event(user):
@@ -170,20 +148,24 @@ def new_event(user):
     Add all the user's information into the db
     """
     events_sheet = SHEET.worksheet("events")
+    event_id = events_sheet.col_values(1)
     event_data = []
     try:
         print(f"Your new event will have the following format: 'Date' , 'Time' , 'Desciption' , 'With Who', 'Where' \n")
-        day = input(f"Please enter the day: ")
-        month = input(f"Please enter the month: ")
-        year = input(f"Please enter the year: ")
-        time = input(f"What time is your event?\n")
+        while True:
+            try:
+                format = "%d-%m-%Y"
+                day_input = input(f"Please enter the date as (DD-MM-YYYY): ")
+                datetime. datetime. strptime(day_input, format)
+            except ValueError:
+                print("The date you provided it is not correct, please try again...")
+        time = input(f"What time is your event?")
         description = input(f"What is the subject of the event?\n")
         who = input(f"Who are you going to meet? ")
         location = input(f"Where are you going to meet with {who} ?\n")
-        event_data.append(user)
-        event_data.append(day)
-        event_data.append(month)
-        event_data.append(year)
+        event_data.append(len(event_id)+1)
+        event_data.append(user[0])
+        event_data.append(day_input)
         event_data.append(time)
         event_data.append(description)
         event_data.append(who)
@@ -212,14 +194,14 @@ def main_menu(val_user):
                     f"You can choose between options 1-4, option {menu_choice} is not valid"
                 )
             elif choice == 1:
-                print("You chose to see your events for the day...")
-                get_data(choice,val_user)
+                print("You chose to see your events...")
+                get_data(choice, val_user)
             elif choice == 2:
                 print("You chose to add a new event...")
                 new_event(val_user)
             elif choice == 3:
                 print("You chose to delete an event...")
-                get_data(choice,val_user)
+                get_data(choice, val_user)
             else:
                 print("Shame that you want to go, see you soon. Bye!")
                 print("In case you want to start again press the refresh button")
