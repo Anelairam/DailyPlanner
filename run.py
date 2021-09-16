@@ -1,7 +1,7 @@
 import gspread
-import datetime
+import time
 from google.oauth2.service_account import Credentials
-from datetime import date
+from datetime import datetime
 from email_validator import validate_email, EmailNotValidError
 
 
@@ -26,9 +26,9 @@ def display():
         -ask information from the user if it is a new or an excisting one
     """
     global currentday  
-    currentday = date.today() 
+    currentday = datetime.now()
+    currentday = currentday.strftime("%d-%m-%Y")
     print(currentday)
-    print(currentday.strftime("%d"),currentday.strftime("%B"),currentday.strftime("%Y"))
     print("Welcome to the Daily Planner")
     while True:
         try:
@@ -147,13 +147,17 @@ def get_data(action, user):
     hours = events_sheet.col_values(4)
     subjects = events_sheet.col_values(5)
     persons = events_sheet.col_values(6)
-    locations = events_sheet.col_values(7)    
+    locations = events_sheet.col_values(7)
+    eventCounter = 0    
     if action == 1:
         #Display user's events
         print(f"{user} here are your events:\n")
         for id, user_id, day, hour, subject, person, location in zip(ids, user_ids, days, hours, subjects, persons, locations):
-            if user_id == user:
+            if user_id == user :
+                eventCounter += 1
                 print(f"#{id}. {day} Meeting at {hour} with {person} at {location} for {subject} \n")
+        if eventCounter == 0 :
+            print(f"{user} you do not have any events scheduled.")
     else:
         #Display all of the user's events and give the option to delete events
         print(f"{user} you have scheduled the following events:\n")
@@ -188,14 +192,22 @@ def new_event(user):
     event_id = events_sheet.col_values(1)
     event_data = []
     try:
-        print(f"Your new event will have the following format: 'Date' , 'Time' , 'Desciption' , 'With Who', 'Where' \n")
+        print(f"Your new event will have the following format: 'Date', 'Time', 'Desciption', 'With Who', 'Where' \n")
         while True:
             try:
-                format = "%d-%m-%Y"
                 day_input = input(f"Please enter the date as (DD-MM-YYYY): ")
-                datetime. datetime. strptime(day_input, format)
-            except ValueError:
-                print("The date you provided it is not correct, please try again...")
+                userDay, userMonth, userYear = day_input.split("-")
+                todayDay, todayMonth, todayYear = currentday.split("-")
+                d1 = [userDay, userMonth, userYear]
+                d2 = [todayDay, todayMonth, todayYear]
+                if d1 > d2:
+                    break
+                else:
+                    raise ValueError(
+                        f"You might have entered an old date."
+                    )
+            except ValueError as e:
+                print(f"The date you provided it is not correct, {e}, please try again...")
         time = input(f"What time is your event?")
         description = input(f"What is the subject of the event?\n")
         who = input(f"Who are you going to meet? ")
