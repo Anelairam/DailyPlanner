@@ -1,7 +1,9 @@
 import gspread
+import datetime
 from google.oauth2.service_account import Credentials
 from datetime import date
-import datetime
+from email_validator import validate_email, EmailNotValidError
+
 
 
 SCOPE = [
@@ -39,6 +41,12 @@ def display():
                 return choice
         except ValueError as e:
             print(f"Invalid data: {e}, please try again.\n")
+
+
+def validEmail(userEmail):
+    try:
+        validated = validate_email(userEmail)
+
                
 
 def user_validation(userd, worksheet):
@@ -145,9 +153,20 @@ def get_data(action, user):
                 print(f"#{id}. {day} Meeting at {hour} with {person} at {location} for {subject} \n")
         while True:
             try:
+                count = 0
+                found = 0
                 del_event = input("Choose which event you want to delete by entering it's id without the #: ")
-                if int(del_event) < len(ids):
-
+                for id in ids:
+                    if del_event == id:
+                        events_sheet.delete_row(count)
+                        found = 1
+                    count += 1    
+                if found == 0:
+                    raise ValueError(
+                        f"The event with id: {del_event} does not exist."
+                    )
+            except ValueError as e:
+                print(f"Indalid input. {e} Please try again")
             
 
 
