@@ -45,7 +45,12 @@ def display():
 
 def validEmail(userEmail):
     try:
-        validated = validate_email(userEmail)
+        valid = validate_email(userEmail)
+        userEmail = valid.email
+        return userEmail
+    except EmailNotValidError as e:
+        print("The email you provided is not valid please try again")
+
 
                
 
@@ -107,7 +112,11 @@ def new_user():
     new_entry = []
     while True:
         try:
-            n_user = input("Please enter your email address: \n")
+            while True:
+                n_user = input("Please enter your email address: \n")                
+                validatedMail = validEmail(n_user)
+                if validatedMail == n_user:
+                    break
             f_name = input("Please enter your name: \n")
             while True:
                 n_password = input("Please enter your password: \n")
