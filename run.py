@@ -5,12 +5,12 @@ from datetime import datetime
 from email_validator import validate_email, EmailNotValidError
 
 
-
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
     ]
+
 
 CREDS = Credentials.from_service_account_file("creds.json")
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
@@ -25,10 +25,13 @@ def display():
     Welcome message to the user:
         -ask information from the user if it is a new or an excisting one
     """
-    global currentday  
+    global currentday
+    global currenttime
     currentday = datetime.now()
     currentday = currentday.strftime("%d-%m-%Y")
-    print(currentday)
+    currenttime = datetime.now()
+    currenttime = currenttime.strftime("%H.%M")
+    print(currentday, currenttime)
     print("Welcome to the Daily Planner")
     while True:
         try:
@@ -51,8 +54,6 @@ def validEmail(userEmail):
     except EmailNotValidError as e:
         print("The email you provided is not valid please try again")
 
-
-               
 
 def user_validation(userd, worksheet):
     """
@@ -101,7 +102,7 @@ def user():
             print(f"Invalid data: {e}")
 
 
-def new_user(): 
+def new_user():
     """
     Asking for new user's data
         -Ask the user to add his username and password
@@ -213,9 +214,24 @@ def new_event(user):
             print(f"The date you provided it is not correct, {e}, please try again...")
     while True:
         try:
-            time = input("Please ente the time of your event as (HH.MM) in 24-hour format: ")
+            while True:
+                time = input("Please ente the time of your event as (HH.MM) in 24-hour format: ")
+                if datetime.strptime(time, "%H.%M"):
+                    userHour, userMinute = time.split(".")
+                    todayHour, todayMinute = currenttime.split(".")
+                    t1 = [userHour, userMinute]
+                    t2 = [todayHour, todayMinute]
+                break
+            if d1 == d2 and t1 > t2:
+                break
+            elif d1 > d2:
+                break
+            else:
+                raise ValueError(
+                    "The time you have entered has passed. "
+                )
         except ValueError as e:
-            print(f"The date you provided it is not correct, {e}, please try again...")
+            print(f"The time you provided it is not correct, {e}, please try again...")
     description = input("What is the subject of the event?")
     who = input("Who are you going to meet? ")
     location = input(f"Where are you going to meet with {who} ?\n")
