@@ -52,7 +52,7 @@ def validEmail(userEmail):
         valid = validate_email(userEmail)
         userEmail = valid.email
         return userEmail
-    except:
+    except Exception:
         print("The email you provided is not valid please try again")
 
 
@@ -139,7 +139,7 @@ def new_user():
             new_entry.append(f_name)
             id_sheet.append_row(new_entry)
             return n_user
-        except:
+        except Exception:
             print(f"You have entered: '{f_name}'. This is not a" +
                   "valid email, please try again...")
 
@@ -164,14 +164,16 @@ def get_data(action, user):
         in zip(ids, user_ids, days, hours, subjects, persons, locations):
             if user_id == user[0]:
                 eventCounter += 1
-                print(f"#{id}. {day} Meeting at {hour} with {person} at {location} for {subject} \n")
+                print(f"#{id}. {day} Meeting at {hour}" +
+                      f" with {person} at {location} for {subject} \n")
         if eventCounter == 0:
             print(f"{user} you do not have any events scheduled.")
     else:
         print(f"{user} you have scheduled the following events:\n")
         for id, user_id, day, hour, subject, person, location in zip(ids, user_ids, days, hours, subjects, persons, locations):
             if user_id == user[0]:
-                print(f"#{id}. {day} Meeting at {hour} with {person} at {location} for {subject} \n")
+                print(f"#{id}. {day} Meeting at {hour}" +
+                      f" with {person} at {location} for {subject} \n")
         while True:
             try:
                 del_event = input("Choose which event you want to delete" +
@@ -204,7 +206,8 @@ def new_event(user):
                                           "(DD-MM-YYYY): ")
                         if datetime.strptime(day_input, "%d-%m-%Y"):
                             userDay, userMonth, userYear = day_input.split("-")
-                            todayDay, todayMonth, todayYear = currentday.split('-')
+                            todayDay, todayMonth, todayYear =
+                            currentday.split('-')
                             d1 = [userDay, userMonth, userYear]
                             d2 = [todayDay, todayMonth, todayYear]
                             break
