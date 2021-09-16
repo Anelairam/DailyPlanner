@@ -51,7 +51,7 @@ def validEmail(userEmail):
         valid = validate_email(userEmail)
         userEmail = valid.email
         return userEmail
-    except EmailNotValidError as e:
+    except:
         print("The email you provided is not valid please try again")
 
 
@@ -82,9 +82,9 @@ def user():
     user_data = []
     validation = True
     while validation:
-        try:        
-            username = input(f"Please enter your username:\n")
-            passwrod = input(f"Please enter your password:\n")
+        try:
+            username = input("Please enter your username:\n")
+            passwrod = input("Please enter your password:\n")
             user_data.append(username)
             user_data.append(passwrod)
             print(f"Hello {username} processing the data you provided... ")
@@ -97,7 +97,7 @@ def user():
                 user_data.pop(0)
                 user_data.pop(0)
                 raise ValueError(
-                    f"The username or the password you have entered is wrong, please try again.")
+                    "The username or the password you have entered is wrong, please try again.")
         except ValueError as e:
             print(f"Invalid data: {e}")
 
@@ -149,39 +149,31 @@ def get_data(action, user):
     subjects = events_sheet.col_values(5)
     persons = events_sheet.col_values(6)
     locations = events_sheet.col_values(7)
-    eventCounter = 0    
+    eventCounter = 0
     if action == 1:
-        #Display user's events
-        print(f"{user} here are your events:\n")
+        print(f"{user} We are searching for your events...\n")
         for id, user_id, day, hour, subject, person, location in zip(ids, user_ids, days, hours, subjects, persons, locations):
-            if user_id == user :
+            if user_id == user[0]:
                 eventCounter += 1
                 print(f"#{id}. {day} Meeting at {hour} with {person} at {location} for {subject} \n")
-        if eventCounter == 0 :
+        if eventCounter == 0:
             print(f"{user} you do not have any events scheduled.")
     else:
-        #Display all of the user's events and give the option to delete events
         print(f"{user} you have scheduled the following events:\n")
         for id, user_id, day, hour, subject, person, location in zip(ids, user_ids, days, hours, subjects, persons, locations):
-            if user_id == user:
+            if user_id == user[0]:
                 print(f"#{id}. {day} Meeting at {hour} with {person} at {location} for {subject} \n")
         while True:
             try:
-                count = 0
-                found = 0
-                del_event = input("Choose which event you want to delete by entering it's id without the #: ")
-                for id in ids:
-                    if del_event == id:
-                        events_sheet.delete_row(count)
-                        found = 1
-                    count += 1    
-                if found == 0:
-                    raise ValueError(
-                        f"The event with id: {del_event} does not exist."
-                    )
+                del_event = input("Choose which event you want to delete by entering it's id number without the #: ")
+                if int(del_event) < len(ids):
+                    cell = events_sheet.find(del_event)
+                    events_sheet.delete_row(cell.row)
+                    break
+                else: ValueError(
+                    "The id you have entered does not exist.")
             except ValueError as e:
                 print(f"Indalid input. {e} Please try again")
-            
 
 
 def new_event(user):
@@ -192,59 +184,72 @@ def new_event(user):
     events_sheet = SHEET.worksheet("events")
     event_id = events_sheet.col_values(1)
     event_data = []
-    #try:
-    print(f"Your new event will have the following format: 'Date', 'Time', 'Desciption', 'With Who', 'Where' \n")
     while True:
         try:
             while True:
-                day_input = input(f"Please enter the date as (DD-MM-YYYY): ")
-                if datetime.strptime(day_input, "%d-%m-%Y"):
-                    userDay, userMonth, userYear = day_input.split("-")
-                    todayDay, todayMonth, todayYear = currentday.split("-")
-                    d1 = [userDay, userMonth, userYear]
-                    d2 = [todayDay, todayMonth, todayYear]
+                try:
+                    while True:
+                        day_input = input(f"Please enter the date as (DD-MM-YYYY): ")
+                        if datetime.strptime(day_input, "%d-%m-%Y"):
+                            userDay, userMonth, userYear = day_input.split("-")
+                            todayDay, todayMonth, todayYear = currentday.split("-")
+                            d1 = [userDay, userMonth, userYear]
+                            d2 = [todayDay, todayMonth, todayYear]
+                            break
+                    if d1 > d2 or d1 == d2:
+                        break
+                    else:
+                        raise ValueError(
+                            f"You might have entered an old date."
+                        )
+                except ValueError as e:
+                    print(f"The date you provided it is not correct, {e}, please try again...")
+            while True:
+                try:
+                    while True:
+                        time = input("Please ente the time of your event as (HH.MM) in 24-hour format: ")
+                        if datetime.strptime(time, "%H.%M"):
+                            userHour, userMinute = time.split(".")
+                            todayHour, todayMinute = currenttime.split(".")
+                            t1 = [userHour, userMinute]
+                            t2 = [todayHour, todayMinute]
+                        break
+                    if d1 == d2 and t1 > t2:
+                        break
+                    elif d1 > d2:
+                        break
+                    else:
+                        raise ValueError(
+                            "The time you have entered has passed. "
+                        )
+                except ValueError as e:
+                    print(f"The time you provided it is not correct, {e}, please try again...")
+            description = input("What is the subject of the event?")
+            who = input("Who are you going to meet? ")
+            location = input("Where is the meeting? ")
+            print("Here are the details of you new event: \n")
+            print(f"Date:{day_input}, Time:{time}, Subject:{description}, With:{who}, At:{location}")
+            while True:
+                update_event = input("Are the information correct? Enter 1 as yes and 0 as no: ")
+                if int(update_event) == 1 or int(update_event) == 0:
                     break
-            if d1 > d2 or d1 == d2:
+            if int(update_event) == 1: 
+                event_data.append(len(event_id)+1)
+                event_data.append(user[0])
+                event_data.append(day_input)
+                event_data.append(time)
+                event_data.append(description)
+                event_data.append(who)
+                event_data.append(location)
+                events_sheet.append_row(event_data)
+                print("Your event list is now updated")
                 break
             else:
                 raise ValueError(
-                    f"You might have entered an old date."
+                    "Please enter again the information of your new event."
                 )
         except ValueError as e:
-            print(f"The date you provided it is not correct, {e}, please try again...")
-    while True:
-        try:
-            while True:
-                time = input("Please ente the time of your event as (HH.MM) in 24-hour format: ")
-                if datetime.strptime(time, "%H.%M"):
-                    userHour, userMinute = time.split(".")
-                    todayHour, todayMinute = currenttime.split(".")
-                    t1 = [userHour, userMinute]
-                    t2 = [todayHour, todayMinute]
-                break
-            if d1 == d2 and t1 > t2:
-                break
-            elif d1 > d2:
-                break
-            else:
-                raise ValueError(
-                    "The time you have entered has passed. "
-                )
-        except ValueError as e:
-            print(f"The time you provided it is not correct, {e}, please try again...")
-    description = input("What is the subject of the event?")
-    who = input("Who are you going to meet? ")
-    location = input(f"Where are you going to meet with {who} ?\n")
-    event_data.append(len(event_id)+1)
-    event_data.append(user[0])
-    event_data.append(day_input)
-    event_data.append(time)
-    event_data.append(description)
-    event_data.append(who)
-    event_data.append(location)
-    events_sheet.append_row(event_data)           
-    #except ValueError as e:
-     #   print(f"Invalid data: {e}, please try again.\n")
+            print(f"Data are not correct. {e}")
 
 
 def main_menu(val_user):
