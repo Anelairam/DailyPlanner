@@ -1,8 +1,7 @@
 import gspread
-#import time
 from google.oauth2.service_account import Credentials
 from datetime import datetime
-from email_validator import validate_email, EmailNotValidError
+from email_validator import validate_email
 
 
 SCOPE = [
@@ -35,10 +34,12 @@ def display():
     print("Welcome to the Daily Planner")
     while True:
         try:
-            choice = input("If you are a new user please enter 0 if you already are a user enter 1:\n")
+            choice = input("If you are a new user please enter 0 if you" +
+                           "already are a user enter 1:\n")
             if choice != "1" and choice != "0":
                 raise ValueError(
-                    f"Enter 0 for excisting user or 1 for new user, you entered: {choice}"
+                    "Enter 0 for excisting user or 1 for new user," +
+                    f"you entered: {choice}"
                 )
             else:
                 return choice
@@ -57,8 +58,8 @@ def validEmail(userEmail):
 
 def user_validation(userd, worksheet):
     """
-    Using user's input the fuction runs a for loop through the users worksheet and check if 
-    the provided data are valid
+    Using user's input the fuction runs a for loop through the users
+    worksheet and check if the provided data are valid
     """
     user_sheet = SHEET.worksheet(worksheet)
     user_email = user_sheet.col_values(1)
@@ -97,7 +98,8 @@ def user():
                 user_data.pop(0)
                 user_data.pop(0)
                 raise ValueError(
-                    "The username or the password you have entered is wrong, please try again.")
+                    "The username or the password you have entered is wrong," +
+                    "please try again.")
         except ValueError as e:
             print(f"Invalid data: {e}")
 
@@ -106,15 +108,16 @@ def new_user():
     """
     Asking for new user's data
         -Ask the user to add his username and password
-        -Run user's information from the validator if the username already exists inform
-            the user that the username exists and provide a new one
+        -Run user's information from the validator if the
+            username already exists inform the user that
+            the username exists and provide a new one
     """
     id_sheet = SHEET.worksheet("users")
     new_entry = []
     while True:
         try:
             while True:
-                n_user = input("Please enter your email address: \n")                
+                n_user = input("Please enter your email address: \n")
                 validatedMail = validEmail(n_user)
                 if validatedMail == n_user:
                     break
@@ -124,22 +127,27 @@ def new_user():
                 v_password = input("Re enter your password for validation: \n")
                 print("Hello we are now processing your data.")
                 if n_password != v_password:
-                    print(f"Unfortunatelly {f_name} the password you provided do not match the original, please try again...")
+                    print(f"Unfortunatelly {f_name} the password you" +
+                          "provided do not match the original, please" +
+                          "try again...")
                 else:
                     break
-            print(f"Welcome to Daily Planner {f_name}, we will direct you to the main menu.")
+            print(f"Welcome to Daily Planner {f_name}, we will direct you to" +
+                  "the main menu.")
             new_entry.append(n_user)
             new_entry.append(n_password)
             new_entry.append(f_name)
             id_sheet.append_row(new_entry)
             return n_user
         except:
-            print(f"You have entered: '{f_name}'. This is not a valid email, please try again...")
+            print(f"You have entered: '{f_name}'. This is not a" +
+                  "valid email, please try again...")
 
 
 def get_data(action, user):
     """
-    Loop through the database and display only the data that are corresponding to today's date
+    Loop through the database and display only
+    the data that are corresponding to today's date
     """
     events_sheet = SHEET.worksheet("events")
     ids = events_sheet.col_values(1)
@@ -152,7 +160,8 @@ def get_data(action, user):
     eventCounter = 0
     if action == 1:
         print(f"{user} We are searching for your events...\n")
-        for id, user_id, day, hour, subject, person, location in zip(ids, user_ids, days, hours, subjects, persons, locations):
+        for id, user_id, day, hour, subject, person, location +
+        in zip(ids, user_ids, days, hours, subjects, persons, locations):
             if user_id == user[0]:
                 eventCounter += 1
                 print(f"#{id}. {day} Meeting at {hour} with {person} at {location} for {subject} \n")
@@ -165,13 +174,15 @@ def get_data(action, user):
                 print(f"#{id}. {day} Meeting at {hour} with {person} at {location} for {subject} \n")
         while True:
             try:
-                del_event = input("Choose which event you want to delete by entering it's id number without the #: ")
+                del_event = input("Choose which event you want to delete" +
+                                  "by entering it's id number without the #: ")
                 if int(del_event) < len(ids):
                     cell = events_sheet.find(del_event)
                     events_sheet.delete_row(cell.row)
                     break
-                else: ValueError(
-                    "The id you have entered does not exist.")
+                else:
+                    raise ValueError(
+                        "The id you have entered does not exist.")
             except ValueError as e:
                 print(f"Indalid input. {e} Please try again")
 
@@ -189,10 +200,11 @@ def new_event(user):
             while True:
                 try:
                     while True:
-                        day_input = input(f"Please enter the date as (DD-MM-YYYY): ")
+                        day_input = input("Please enter the date as" +
+                                          "(DD-MM-YYYY): ")
                         if datetime.strptime(day_input, "%d-%m-%Y"):
                             userDay, userMonth, userYear = day_input.split("-")
-                            todayDay, todayMonth, todayYear = currentday.split("-")
+                            todayDay, todayMonth, todayYear = currentday.split('-')
                             d1 = [userDay, userMonth, userYear]
                             d2 = [todayDay, todayMonth, todayYear]
                             break
@@ -200,14 +212,16 @@ def new_event(user):
                         break
                     else:
                         raise ValueError(
-                            f"You might have entered an old date."
+                            "You might have entered an old date."
                         )
                 except ValueError as e:
-                    print(f"The date you provided it is not correct, {e}, please try again...")
+                    print(f"The date you provided it is not correct, {e}," +
+                          "please try again...")
             while True:
                 try:
                     while True:
-                        time = input("Please ente the time of your event as (HH.MM) in 24-hour format: ")
+                        time = input("Please ente the time of your event as" +
+                                     "(HH.MM) in 24-hour format: ")
                         if datetime.strptime(time, "%H.%M"):
                             userHour, userMinute = time.split(".")
                             todayHour, todayMinute = currenttime.split(".")
@@ -223,17 +237,20 @@ def new_event(user):
                             "The time you have entered has passed. "
                         )
                 except ValueError as e:
-                    print(f"The time you provided it is not correct, {e}, please try again...")
+                    print(f"The time you provided it is not correct, {e}," +
+                          "please try again...")
             description = input("What is the subject of the event?")
             who = input("Who are you going to meet? ")
             location = input("Where is the meeting? ")
             print("Here are the details of you new event: \n")
-            print(f"Date:{day_input}, Time:{time}, Subject:{description}, With:{who}, At:{location}")
+            print(f"Date:{day_input}, Time:{time}, Subject:{description}," +
+                  f"With:{who}, At:{location}")
             while True:
-                update_event = input("Are the information correct? Enter 1 as yes and 0 as no: ")
+                update_event = input("Are the information correct? " +
+                                     "Enter 1 as yes and 0 as no: ")
                 if int(update_event) == 1 or int(update_event) == 0:
                     break
-            if int(update_event) == 1: 
+            if int(update_event) == 1:
                 event_data.append(len(event_id)+1)
                 event_data.append(user[0])
                 event_data.append(day_input)
@@ -263,12 +280,15 @@ def main_menu(val_user):
     print(f"Hello {val_user} how can I help you today? \n")
     while True:
         try:
-            print(f" 1.Display my events for today\n", f"2.Add a new event\n", f"3.Delete an event\n", f"4.Exit\n")
-            menu_choice = input(f"Please choose from the options 1-4 :\n")
+            print(" 1.Display my events for today\n", +
+                  "2.Add a new event\n", +
+                  "3.Delete an event\n", "4.Exit\n")
+            menu_choice = input("Please choose from the options 1-4 :\n")
             choice = int(menu_choice)
             if choice < 1 or choice > 4:
                 raise ValueError(
-                    f"You can choose between options 1-4, option {menu_choice} is not valid"
+                    "You can choose between options 1-4, option" +
+                    f"{menu_choice} is not valid"
                 )
             elif choice == 1:
                 print("You chose to see your events...")
@@ -281,7 +301,8 @@ def main_menu(val_user):
                 get_data(choice, val_user)
             else:
                 print("Shame that you want to go, see you soon. Bye!")
-                print("In case you want to start again press the refresh button")
+                print("In case you want to start again press the refresh" +
+                      "button")
         except ValueError as e:
             print(f"Invalid data: {e}, please try again.\n")
 
