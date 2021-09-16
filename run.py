@@ -1,5 +1,5 @@
 import gspread
-import time
+#import time
 from google.oauth2.service_account import Credentials
 from datetime import datetime
 from email_validator import validate_email, EmailNotValidError
@@ -191,37 +191,44 @@ def new_event(user):
     events_sheet = SHEET.worksheet("events")
     event_id = events_sheet.col_values(1)
     event_data = []
-    try:
-        print(f"Your new event will have the following format: 'Date', 'Time', 'Desciption', 'With Who', 'Where' \n")
-        while True:
-            try:
+    #try:
+    print(f"Your new event will have the following format: 'Date', 'Time', 'Desciption', 'With Who', 'Where' \n")
+    while True:
+        try:
+            while True:
                 day_input = input(f"Please enter the date as (DD-MM-YYYY): ")
-                userDay, userMonth, userYear = day_input.split("-")
-                todayDay, todayMonth, todayYear = currentday.split("-")
-                d1 = [userDay, userMonth, userYear]
-                d2 = [todayDay, todayMonth, todayYear]
-                if d1 > d2:
+                if datetime.strptime(day_input, "%d-%m-%Y"):
+                    userDay, userMonth, userYear = day_input.split("-")
+                    todayDay, todayMonth, todayYear = currentday.split("-")
+                    d1 = [userDay, userMonth, userYear]
+                    d2 = [todayDay, todayMonth, todayYear]
                     break
-                else:
-                    raise ValueError(
-                        f"You might have entered an old date."
-                    )
-            except ValueError as e:
-                print(f"The date you provided it is not correct, {e}, please try again...")
-        time = input(f"What time is your event?")
-        description = input(f"What is the subject of the event?\n")
-        who = input(f"Who are you going to meet? ")
-        location = input(f"Where are you going to meet with {who} ?\n")
-        event_data.append(len(event_id)+1)
-        event_data.append(user[0])
-        event_data.append(day_input)
-        event_data.append(time)
-        event_data.append(description)
-        event_data.append(who)
-        event_data.append(location)
-        events_sheet.append_row(event_data)           
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
+            if d1 > d2 or d1 == d2:
+                break
+            else:
+                raise ValueError(
+                    f"You might have entered an old date."
+                )
+        except ValueError as e:
+            print(f"The date you provided it is not correct, {e}, please try again...")
+    while True:
+        try:
+            time = input("Please ente the time of your event as (HH.MM) in 24-hour format: ")
+        except ValueError as e:
+            print(f"The date you provided it is not correct, {e}, please try again...")
+    description = input("What is the subject of the event?")
+    who = input("Who are you going to meet? ")
+    location = input(f"Where are you going to meet with {who} ?\n")
+    event_data.append(len(event_id)+1)
+    event_data.append(user[0])
+    event_data.append(day_input)
+    event_data.append(time)
+    event_data.append(description)
+    event_data.append(who)
+    event_data.append(location)
+    events_sheet.append_row(event_data)           
+    #except ValueError as e:
+     #   print(f"Invalid data: {e}, please try again.\n")
 
 
 def main_menu(val_user):
