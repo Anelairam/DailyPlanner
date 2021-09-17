@@ -48,6 +48,9 @@ def display():
 
 
 def validEmail(userEmail):
+    """
+    The function validates the format of the email
+    """
     try:
         valid = validate_email(userEmail)
         userEmail = valid.email
@@ -308,6 +311,10 @@ def main_menu(val_user):
 
 
 def main():
+    """
+    Main function gathers all the necessary function
+    for the app to run
+    """
     us_choice = display()
     if us_choice == "1":
         valid_user = user()
