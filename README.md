@@ -1,8 +1,14 @@
-#Daily Planner
+# Daily Planner
 
-Welcome to the Daily Planner, a Python application 
+Welcome to the Daily Planner, a Python application which runs in the Code Institure mock terminal on Heroku.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
+The purpose of this application is for the user to register, preview and delete his events.
+Each user has access on his own events only and need to be an authorised user in order to interact with the data.
+
+Here is the live version of my project.
+
+
+In order for the user to start register his events he first needs to be a valid user of the application.to login and start registe his events first of all he needs to have an accountThis is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
 
 ## Reminders
 
