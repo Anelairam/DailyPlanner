@@ -7,21 +7,27 @@ Each user has access on his own events only and need to be an authorised user in
 
 Here is the live version of my project.
 
+## How to use the application
+In order for the user to start register his events he has to enroll into the application's system. If he is already a user he can log in and if not, he can register and become a user. For a user to log in it is required a valid email and password which he had already entered during his registration. For any new user the application will request a few informarion, validate them and then register the new person as a valid user.
+When the validation of the user is completed, the application will provide the user a 4 choice menu from which he can navigate through the application, interact with the data by viewing existing events, adding new events, delete events and exit.
 
-In order for the user to start register his events he first needs to be a valid user of the application.to login and start registe his events first of all he needs to have an accountThis is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
+## Features
+### Existing Features
 
-## Reminders
-
-* Your code must be placed in the `run.py` file
+* Welcome message with information regardin the current date and entry start menu
+* (Entry picture)
 * Your dependencies must be placed in the `requirements.txt` file
 * Do not edit any of the other files or your code may not deploy properly
 
-## Creating the Heroku app
+## Future Features
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+Future features that had been thought through the deployment of the application and are planned to be added in the application in the new future are
+* Option for the user to edit the existing events
+* Option for the user to change password and username
+* Option for the events of the user to be displayed per day, per month and future
 
-1. `heroku/python`
-2. `heroku/nodejs`
+## Data Model
+I decided for the purpose of the application to use Google Sheets with two worksheets, users and events. The application interacts with the data that are registered in the users worksheet to validate the username/email and password. In the events worksheet the application reads,writes and deletes each user's events based on his choices
 
 You must then create a _Config Var_ called `PORT`. Set this to `8000`
 
