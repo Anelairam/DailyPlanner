@@ -43,8 +43,8 @@ I have manually tested the project applying the following:
 
 * When I was trying to access certain data for user validation a type error occured at the iteration statement. I fixed this issue by converting the userd into a tupple using:   tuple(userd)
 * During the process of displaying the events and giving the user the ability to delete any desired event of his, I realised that every event should have a unique id in order to be recognised from the others that the user had. In order to fix this issue I created a new column into the events worksheet in which every new event will be assigned with a unique number. Providing the number to the user and asking for the desired event with the unique number to be deleted, I targeted the event's row using the:
-    **cell = events_sheet.find(del_event)
-    **events_sheet.delete_row(cell.row) 
+    cell = events_sheet.find(del_event)
+    events_sheet.delete_row(cell.row) 
     
 ### Reamining Bugs
 
