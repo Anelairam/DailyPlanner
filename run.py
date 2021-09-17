@@ -160,8 +160,7 @@ def get_data(action, user):
     eventCounter = 0
     if action == 1:
         print(f"{user} We are searching for your events...\n")
-        for id, user_id, day, hour, subject, person, location +
-        in zip(ids, user_ids, days, hours, subjects, persons, locations):
+        for id, user_id, day, hour, subject, person, location in zip(ids, user_ids, days, hours, subjects, persons, locations):
             if user_id == user[0]:
                 eventCounter += 1
                 print(f"#{id}. {day} Meeting at {hour}" +
@@ -204,14 +203,19 @@ def new_event(user):
                     while True:
                         day_input = input("Please enter the date as" +
                                           "(DD-MM-YYYY): ")
+                        
                         if datetime.strptime(day_input, "%d-%m-%Y"):
-                            userDay, userMonth, userYear = day_input.split("-")
-                            todayDay, todayMonth, todayYear =
-                            currentday.split('-')
-                            d1 = [userDay, userMonth, userYear]
-                            d2 = [todayDay, todayMonth, todayYear]
+                            
+                            #userDay, userMonth, userYear = day_input.split("-")
+                            #todayDay, todayMonth, todayYear =
+                            #currentday.split('-')
+                            #d1 = [userDay, userMonth, userYear]
+                            #d2 = [todayDay, todayMonth, todayYear]
+                            #d1 = datetime.strptime(day_input, "%d-%m-%Y")
+                            #d2 = datetime.strptime(currentday, "%d-%m-%Y")
                             break
-                    if d1 > d2 or d1 == d2:
+                        day_input = datetime.strptime(day_input, "%d-%m-%Y")
+                    if day_input < currentday or day_input == currentday:
                         break
                     else:
                         raise ValueError(
@@ -283,9 +287,7 @@ def main_menu(val_user):
     print(f"Hello {val_user} how can I help you today? \n")
     while True:
         try:
-            print(" 1.Display my events for today\n", +
-                  "2.Add a new event\n", +
-                  "3.Delete an event\n", "4.Exit\n")
+            print(" 1.Display my events for today\n", "2.Add a new event\n", "3.Delete an event\n", "4.Exit\n")
             menu_choice = input("Please choose from the options 1-4 :\n")
             choice = int(menu_choice)
             if choice < 1 or choice > 4:
