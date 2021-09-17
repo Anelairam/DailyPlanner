@@ -15,9 +15,7 @@ When the validation of the user is completed, the application will provide the u
 ### Existing Features
 
 * Welcome message with information regardin the current date and entry start menu
-* (Entry picture)
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+
 
 ## Future Features
 
