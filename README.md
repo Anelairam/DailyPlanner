@@ -27,17 +27,55 @@ Future features that had been thought through the deployment of the application 
 * Option for the events of the user to be displayed per day, per month and future
 
 ## Data Model
-I decided for the purpose of the application to use Google Sheets with two worksheets, users and events. The application interacts with the data that are registered in the users worksheet to validate the username/email and password. In the events worksheet the application reads,writes and deletes each user's events based on his choices
+I decided for the purpose of the application to use Google Sheets with two worksheets, users and events. The application interacts with the data that are registered in the users worksheet to validate the username/email and password. In the events worksheet the application reads,writes and deletes each user's events based on his choices.
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+## Testing
+I have manually tested the project applying the following:
+*Given valid and invalid input combinations:
+  *Invalid email address formats
+  *Invalid username and password
+  *Invalid date and time combination while adding a new event
+*Tested in Heroku and gitpod terminal
+*Passed the code thourhg a PEP8 validator
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+## Bugs
+### Solved bugs
 
-Connect your GitHub repository and deploy as normal.
+* When I was trying to access certain data for user validation a type error occured at the iteration statement. I fixed this issue by converting the userd into a tupple using:   tuple(userd)
+* During the process of displaying the events and giving the user the ability to delete any desired event of his, I realised that every event should have a unique id in order to be recognised from the others that the user had. In order to fix this issue I created a new column into the events worksheet in which every new event will be assigned with a unique number. Providing the number to the user and asking for the desired event with the unique number to be deleted, I targeted the event's row using the:
+    **cell = events_sheet.find(del_event)
+    **events_sheet.delete_row(cell.row) 
+    
+### Reamining Bugs
 
-## Constraints
+During the testing period it was spotted that there was an issue with the date validation regarding the comparison with the past and present or future dates.
+Steps that had been followed till now for resolving this issue are:
+* Convert the data type and compare
+* Try different types of data comparison and reverse
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+## Validators Test
+
+## Deployment
+This project was deployed using the Code Institure's terminal Heroku.
+
+Steps followed for deployment:
+* Clone of the repository from code institute's template
+* Create new Heroku app
+* Set the Config Vars
+* Set the buildpacks to Python and NodeJs
+* Link the application to the repository
+* Deploy the project
+
+## Credits
+Deployment:
+* Code Institute deployment terminal
+* https://sempioneer.com/python-for-seo/google-sheets-with-python/
+* https://docs.gspread.org/en/latest/user-guide.html
+* https://www.geeksforgeeks.org/comparing-dates-python/
+* https://www.kite.com/python/answers/how-to-validate-a-date-string-format-in-python
+* https://pypi.org/project/email-validator/
+* My mentor for the great support and guidance
+* Slack community supportive with solution ideas by facing similar issues
 
 -----
-Happy coding!
+Thank you!
