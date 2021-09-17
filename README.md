@@ -16,7 +16,9 @@ When the validation of the user is completed, the application will provide the u
 
 * Welcome message with information regardin the current date and entry start menu
 ![Welcome Image](https://github.com/Anelairam/DailyPlanner/blob/f4a0b424412d68263d3f6d25e8c1d13109c5b26a/entry.jpg)
+* User Log in or Sign up interface
 ![User Log in](https://github.com/Anelairam/DailyPlanner/blob/f4a0b424412d68263d3f6d25e8c1d13109c5b26a/userlogin.jpg)
+* New user interface and validation steps
 ![New user validation](https://github.com/Anelairam/DailyPlanner/blob/f4a0b424412d68263d3f6d25e8c1d13109c5b26a/newuservalidation.jpg)
 
 
