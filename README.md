@@ -1,11 +1,14 @@
 # Daily Planner
 
+![Responsive Mockup](https://github.com/Anelairam/DailyPlanner/blob/050dfe912de3ab68496be121d5d7fb49f25a6a7e/responsive.jpg)
+
 Welcome to the Daily Planner, a Python application which runs in the Code Institure mock terminal on Heroku.
 
 The purpose of this application is for the user to register, preview and delete his events.
 Each user has access on his own events only and need to be an authorised user in order to interact with the data.
 
 Here is the live version of my project.
+![Deployment Link](https://dailyplanner-stdapp.herokuapp.com/)
 
 ## How to use the application
 In order for the user to start register his events he has to enroll into the application's system. If he is already a user he can log in and if not, he can register and become a user. For a user to log in it is required a valid email and password which he had already entered during his registration. For any new user the application will request a few informarion, validate them and then register the new person as a valid user.
@@ -59,6 +62,8 @@ Steps that had been followed till now for resolving this issue are:
 * Try different types of data comparison and reverse
 
 ## Validators Test
+The PEP8 online was used as validator
+![Validator](https://github.com/Anelairam/DailyPlanner/blob/050dfe912de3ab68496be121d5d7fb49f25a6a7e/validator.jpg)
 
 ## Deployment
 This project was deployed using the Code Institure's terminal Heroku.
