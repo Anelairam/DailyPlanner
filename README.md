@@ -15,9 +15,9 @@ When the validation of the user is completed, the application will provide the u
 ### Existing Features
 
 * Welcome message with information regardin the current date and entry start menu
-![Welcome Image]https://github.com/Anelairam/DailyPlanner/blob/f4a0b424412d68263d3f6d25e8c1d13109c5b26a/entry.jpg
-![User Log in]https://github.com/Anelairam/DailyPlanner/blob/f4a0b424412d68263d3f6d25e8c1d13109c5b26a/userlogin.jpg
-![New user validation]https://github.com/Anelairam/DailyPlanner/blob/f4a0b424412d68263d3f6d25e8c1d13109c5b26a/newuservalidation.jpg
+![Welcome Image](https://github.com/Anelairam/DailyPlanner/blob/f4a0b424412d68263d3f6d25e8c1d13109c5b26a/entry.jpg)
+![User Log in](https://github.com/Anelairam/DailyPlanner/blob/f4a0b424412d68263d3f6d25e8c1d13109c5b26a/userlogin.jpg)
+![New user validation](https://github.com/Anelairam/DailyPlanner/blob/f4a0b424412d68263d3f6d25e8c1d13109c5b26a/newuservalidation.jpg)
 
 
 ## Future Features
