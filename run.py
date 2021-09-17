@@ -166,8 +166,8 @@ def get_data(action, user):
                 in zip(ids, user_ids, days, hrs, sbs, pss, locs):
             if user_id == user[0]:
                 eventCounter += 1
-                print(f"#{id}. {day} Meeting at {hr}" +
-                      f" with {ps} at {loc} for {sb} \n")
+                print(f"#{id}. {day} \nMeeting at {hr}" +
+                      f"\n with {ps}\n at {loc}\n for {sb} \n")
         if eventCounter == 0:
             print(f"{user} you do not have any events scheduled.\n")
     else:
@@ -175,8 +175,8 @@ def get_data(action, user):
         for id, user_id, day, hr, sb, ps, loc\
                 in zip(ids, user_ids, days, hrs, sbs, pss, locs):
             if user_id == user[0]:
-                print(f"#{id}. {day} Meeting at {hr}" +
-                      f" with {ps} at {loc} for {sb} \n")
+                print(f"#{id}. {day} \nMeeting at {hr}" +
+                      f"\n with {ps}\n at {loc}\n for {sb} \n")
         while True:
             try:
                 del_event = input("Choose which event you want to delete " +
